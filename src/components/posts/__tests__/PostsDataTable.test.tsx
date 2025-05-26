@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PostsDataTable from '../PostsDataTable';
+import type { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from 'react';
 
 // Mock the DataTable component
 vi.mock('../../ui/DataTable', () => ({
@@ -13,7 +14,7 @@ vi.mock('../../ui/DataTable', () => ({
       <div data-testid="loading">{loading.toString()}</div>
       <div data-testid="empty-message">{emptyMessage}</div>
       {data.length === 0 && <div data-testid="empty-state">{emptyMessage}</div>}
-      {data.map((item, index) => (
+      {data.map((item: { name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
         <div key={index} data-testid={`post-item-${index}`}>
           <div data-testid={`post-name-${index}`}>{item.name}</div>
           <div data-testid={`post-description-${index}`}>{item.description}</div>
