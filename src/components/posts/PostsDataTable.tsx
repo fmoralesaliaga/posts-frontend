@@ -91,8 +91,9 @@ const PostsDataTable: React.FC<PostsDataTableProps> = ({
             </span>
           </div>
         );
-      }    }
-  ], []);
+      }
+    },
+  ];
   
   // Definir las acciones disponibles
   const actions: TableAction<Post>[] = useMemo(() => [
