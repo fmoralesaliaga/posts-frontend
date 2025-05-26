@@ -1,0 +1,41 @@
+/* Estilos para overlay transparente con blur */
+
+/* Overlay completamente transparente con blur */
+.modal-overlay-transparent {
+  background: transparent;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Overlay con muy poca opacidad */
+.modal-overlay-subtle {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* Overlay con tinte muy ligero */
+.modal-overlay-light {
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Overlay glassmorphism */
+.modal-overlay-glass {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px) saturate(150%) brightness(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(150%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Contenido modal con glassmorphism sutil */
+.modal-content-glass {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 
+              0 0 0 1px rgba(255, 255, 255, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}

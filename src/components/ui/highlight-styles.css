@@ -1,0 +1,137 @@
+/* Estilos elegantes para destacar elementos recién creados */
+
+/* Opción 1: Efecto Glow/Brillo Azul (actual) */
+.highlight-glow {
+  background: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.highlight-glow:hover {
+  background: rgba(59, 130, 246, 0.12);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.2);
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.25);
+  }
+}
+
+/* Opción 2: Efecto Shimmer/Destello */
+.highlight-shimmer {
+  background: linear-gradient(90deg, rgba(248, 250, 252, 0.8) 0%, rgba(226, 232, 240, 0.9) 50%, rgba(248, 250, 252, 0.8) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  border-left: 3px solid #3b82f6;
+}
+
+/* Shimmer Effect con borde negro */
+.highlight-shimmer-black {
+  background: linear-gradient(90deg, rgba(249, 250, 251, 0.9) 0%, rgba(243, 244, 246, 1) 50%, rgba(249, 250, 251, 0.9) 100%);
+  background-size: 200% 100%;
+  animation: shimmer-black 2.5s ease-in-out infinite;
+  border-left: 4px solid #111827;
+  transition: all 0.3s ease;
+}
+
+.highlight-shimmer-black:hover {
+  background: linear-gradient(90deg, rgba(243, 244, 246, 1) 0%, rgba(229, 231, 235, 1) 50%, rgba(243, 244, 246, 1) 100%);
+  border-left: 4px solid #000000;
+}
+
+@keyframes shimmer-black {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Opción 3: Efecto Slide-in desde la izquierda */
+.highlight-slide {
+  background: rgba(16, 185, 129, 0.1);
+  border-left: 4px solid #10b981;
+  position: relative;
+  overflow: hidden;
+}
+
+.highlight-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+  animation: slide-highlight 3s ease-out;
+}
+
+@keyframes slide-highlight {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Opción 4: Efecto Subtle Scale */
+.highlight-scale {
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
+}
+
+.highlight-scale:hover {
+  transform: scale(1.02);
+  background: rgba(139, 92, 246, 0.12);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+/* Opción 5: Efecto Gradient Border */
+.highlight-gradient {
+  background: rgba(249, 250, 251, 1);
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.highlight-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #10b981);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: subtract;
+  animation: gradient-rotate 3s linear infinite;
+}
+
+@keyframes gradient-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Opción 6: Efecto Breathe */
+.highlight-breathe {
+  background: rgba(245, 158, 11, 0.1);
+  border-left: 3px solid #f59e0b;
+  animation: breathe 2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { 
+    transform: scale(1);
+    background: rgba(245, 158, 11, 0.1);
+  }
+  50% { 
+    transform: scale(1.005);
+    background: rgba(245, 158, 11, 0.15);
+  }
+}
