@@ -1,20 +1,39 @@
 import axios from 'axios';
+import type { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
-// Configuración de base URL para API
+/**
+ * Centralized API configuration
+ * @module api
+ */
+
+/**
+ * Base URL for API requests.
+ * Uses environment variable if available, otherwise falls back to localhost.
+ */
 const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
+/**
+ * Axios instance with predefined configuration
+ */
 const api = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 segundos de tiempo de espera
+  timeout: 10000, // 10 seconds timeout
 });
 
-// Interceptor para manejar solicitudes
+/**
+ * Request interceptor
+ * Handles authentication and request preparation
+ */
 api.interceptors.request.use(
-  (config) => {
-    // Aquí podemos agregar lógica como tokens de autenticación si fuera necesario
+  (config: InternalAxiosRequestConfig) => {
+    // Get authentication token if needed
+    // const token = localStorage.getItem('auth_token');
+    // if (token && config.headers) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
     return config;
   },
   (error) => {
@@ -22,21 +41,31 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor para manejar respuestas
+/**
+ * Response interceptor
+ * Handles response processing and error handling
+ */
 api.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     return response;
   },
-  (error) => {
-    // Manejo centralizado de errores
-    // Extract error message if needed
-    error.response?.data?.message || error.message || 'Ocurrió un error desconocido';
+  (error: AxiosError) => {
+    // Log meaningful error message
+    const errorMessage = 
+      (error.response?.data as { message?: string })?.message || 
+      error.message || 
+      'An unknown error occurred';
     
-    // Podríamos agregar lógica específica según el código de estado
+    // Log error for debugging
+    console.error('API Error:', errorMessage);
+    
+    // Handle specific error codes
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          console.log('No autorizado');
+          console.error('Authentication error: User not authorized');
+          // Could redirect to login page or clear credentials
+          // store.dispatch(logout());
           break;
         case 403:
           console.log('Acceso prohibido');

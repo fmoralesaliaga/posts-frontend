@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import DataTable, { type TableColumn, type TableAction } from '../ui/DataTable';
 import type { Post } from '../../types/post';
 
@@ -16,9 +16,8 @@ const PostsDataTable: React.FC<PostsDataTableProps> = ({
   loading,
   recentlyCreatedIds = [],
   forcePageNumber
-}) => {  // Definir las columnas de la tabla
-  const columns: TableColumn<Post>[] = [
-    {
+}) => {  // Definir las columnas de la tabla - memoizadas para evitar re-renders innecesarios
+  const columns: TableColumn<Post>[] = useMemo(() => [    {
       key: 'name',
       header: 'Nombre',
       sortable: true,      
@@ -39,7 +38,8 @@ const PostsDataTable: React.FC<PostsDataTableProps> = ({
           </p>
         </div>
       ),
-    }  ];
+    }
+  ], []);
   
   // Columnas específicas para el modal con renderizado personalizado
   const detailColumns: TableColumn<Post>[] = [
@@ -91,12 +91,11 @@ const PostsDataTable: React.FC<PostsDataTableProps> = ({
             </span>
           </div>
         );
-      }
-    }
-  ];
+      }    }
+  ], []);
   
   // Definir las acciones disponibles
-  const actions: TableAction<Post>[] = [
+  const actions: TableAction<Post>[] = useMemo(() => [
     {
       label: 'Delete',
       variant: 'danger',      
@@ -110,9 +109,13 @@ const PostsDataTable: React.FC<PostsDataTableProps> = ({
           <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
         </svg>
       ),
-      onClick: (post) => onDeletePost(post.id),
-    },
-  ];  return (
+      onClick: (post) => onDeletePost(post.id),    },
+  ], [onDeletePost]);  
+  
+  // Callback memoizado para el ID getter
+  const getItemId = useCallback((post: Post) => post.id, []);
+  
+  return (
     <DataTable
       data={posts}
       columns={columns}
@@ -120,10 +123,9 @@ const PostsDataTable: React.FC<PostsDataTableProps> = ({
       loading={loading}
       emptyMessage="No posts found. Create a new one!"
       className="mt-4"
-      pageSize={5}
-      pageSizeOptions={[5, 10, 25, 50]}
+      pageSize={5}      pageSizeOptions={[5, 10, 25, 50]}
       highlightedIds={recentlyCreatedIds}
-      getItemId={(post) => post.id}
+      getItemId={getItemId}
       forcePageNumber={forcePageNumber}
       showDetailModal={true}
       detailModalTitle="Detalles del Post"

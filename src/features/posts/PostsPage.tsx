@@ -9,7 +9,7 @@ import {
   removeFromRecentlyCreated
 } from '../../features/posts/postsSlice';
 import PostsDataTable from '../../components/posts/PostsDataTable';
-import PostFilter from '../../components/posts/PostFilter';
+import { PostFilterWithDebounce } from '../../components/posts/PostFilterWithDebounce';
 import DeleteConfirmationModal from '../../components/posts/DeleteConfirmationModal';
 import Notification from '../../components/ui/Notification';
 import InlinePostForm from '../../components/posts/InlinePostForm';
@@ -129,7 +129,7 @@ const PostsPage = () => {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold text-gray-800">Posts</h1>
       </div>      {/* Filtro */}
-      <PostFilter initialFilter={nameFilter} onFilterChange={handleFilterChange} />      {/* DataTable de posts */}
+      <PostFilterWithDebounce initialFilter={nameFilter} onFilterChange={handleFilterChange} debounceDelay={300} />      {/* DataTable de posts */}
       <PostsDataTable
         posts={filteredPosts}
         onDeletePost={handleDeleteClick}
