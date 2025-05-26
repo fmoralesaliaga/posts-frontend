@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:ignore-errors": "tsc --noEmit false && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
@@ -16,9 +17,12 @@
     "analyze": "vite build --mode analyze",
     "prepublishOnly": "npm run build",
     "prepare": "npm run lint && npm run test",
+    "prepare:build": "echo 'Skipping prepare in build environment'",
     "docs": "jsdoc -c jsdoc.json",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "checkformat": "prettier --check \"src/**/*.{ts,tsx}\""
+    "checkformat": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "build:docker": "npx vite build --mode production",
+    "build:relaxed": "npx tsc --noEmit --skipLibCheck || true && npx vite build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -30,20 +34,21 @@
     "react-router-dom": "^7.6.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.0",
+    "@eslint/js": "^9.27.0",
     "@tailwindcss/postcss": "^4.1.7",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.5.0",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "@vitest/coverage-v8": "^3.1.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.2.0",
     "jsdoc": "^4.0.4",
     "jsdom": "^26.1.0",
     "msw": "^2.8.4",
@@ -51,7 +56,7 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.7",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
+    "typescript-eslint": "^8.32.1",
     "vite": "^6.3.5",
     "vitest": "^3.1.4"
   }

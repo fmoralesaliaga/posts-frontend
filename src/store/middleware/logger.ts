@@ -1,11 +1,7 @@
-import { Middleware } from 'redux';
-import { RootState } from '../store';
+import type { Middleware } from '@reduxjs/toolkit';
+import type { RootState } from '../index';
 
-/**
- * Advanced custom logger middleware for Redux
- * Provides colored output and configurable logging levels
- */
-const loggerMiddleware: Middleware<{}, RootState> = store => next => action => {
+export const logger: Middleware<object, RootState> = (store) => (next) => (action) => {
   // Skip logging if not in development mode
   if (import.meta.env.MODE !== 'development') {
     return next(action);
@@ -14,7 +10,11 @@ const loggerMiddleware: Middleware<{}, RootState> = store => next => action => {
   const prevState = store.getState();
   
   // Log action in blue
-  console.group(`%cAction: ${action.type}`, 'color: #3B82F6; font-weight: bold');
+  if (typeof action === 'object' && action !== null && 'type' in action) {
+    console.group(`%cAction: ${(action as { type: string }).type}`, 'color: #3B82F6; font-weight: bold');
+  } else {
+    console.group('%cAction: <unknown>', 'color: #3B82F6; font-weight: bold');
+  }
   console.log('%cPrevious State:', 'color: #6B7280', prevState);
   console.log('%cAction:', 'color: #10B981', action);
   
@@ -27,9 +27,9 @@ const loggerMiddleware: Middleware<{}, RootState> = store => next => action => {
   
   // Determine what changed between states
   console.log('%cChanged:', 'color: #8B5CF6');
-  Object.keys(nextState).forEach(key => {
+  (Object.keys(nextState) as Array<keyof RootState>).forEach(key => {
     if (prevState[key] !== nextState[key]) {
-      console.log(`%c  ${key}:`, 'color: #8B5CF6', {
+      console.log(`%c  ${String(key)}:`, 'color: #8B5CF6', {
         from: prevState[key],
         to: nextState[key]
       });
@@ -41,5 +41,3 @@ const loggerMiddleware: Middleware<{}, RootState> = store => next => action => {
   // Return value is usually the action
   return returnValue;
 };
-
-export default loggerMiddleware;
