@@ -65,7 +65,7 @@ export function useDebouncedSearch<T>(
 export function useClickOutside<T extends HTMLElement = HTMLDivElement>(
   initialIsVisible: boolean
 ): {
-  ref: React.RefObject<T>;
+  ref: React.RefObject<T | null>;
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 } {

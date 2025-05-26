@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import React, { type JSX, type PropsWithChildren, type ReactElement } from 'react';
+import { render, type RenderOptions } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -18,9 +18,7 @@ export function renderWithProviders(
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
     store = configureStore({
-      reducer: {
-        posts: postsReducer,
-      },
+      reducer: postsReducer,
       preloadedState,
     }),
     route = '/',

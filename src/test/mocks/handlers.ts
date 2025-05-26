@@ -24,10 +24,11 @@ export const handlers = [
   // POST create a new post
   http.post('http://localhost:3001/api/posts', async ({ request }) => {
     const data = await request.json();
+    const body = (typeof data === 'object' && data !== null) ? data as Record<string, any> : {};
     const newPost = {
       id: 3,
-      name: data.name,
-      description: data.description,
+      name: body.name ?? '',
+      description: body.description ?? '',
       createdAt: new Date().toISOString()
     };
     
@@ -55,7 +56,7 @@ export const handlers = [
     if (postIndex !== -1) {
       const updatedPost = {
         ...posts[postIndex],
-        ...data
+        ...(typeof data === 'object' && data !== null ? data : {})
       };
       
       return HttpResponse.json(updatedPost);
